@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["amirrezaask <raskarpour@gmail.com>"]
 edition = "2018"
 
+[[test]]
+name = "panic"
+harness = false
 
 [profile.dev]
 panic = "abort"
