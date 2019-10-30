@@ -9,8 +9,9 @@ use crate::qemu_exit::{QemuExitCode, exit_qemu};
 
 mod vga_buffer;
 mod qemu_exit;
+#[macro_use]
 mod serial;
-
+mod panic;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
@@ -20,22 +21,6 @@ pub extern "C" fn _start() -> ! {
     loop {}
 }
 
-#[cfg(not(test))] // not in test mode
-#[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-    println!("{}", info);
-    loop {}
-}
-
-// our panic handler in test mode
-#[cfg(test)]
-#[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-    serial_println!("[failed]\n");
-    serial_println!("Error: {}\n", info);
-    exit_qemu(QemuExitCode::Failed);
-    loop {}
-}
 
 #[cfg(test)]
 fn test_runner(tests: &[&dyn Fn()]) {
