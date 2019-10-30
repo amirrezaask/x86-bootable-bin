@@ -10,3 +10,9 @@ make build
 ```bash
 cargo xrun
 ```
+
+## Tests
+
+```bash
+cargo xtest
+```
